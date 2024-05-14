@@ -22,9 +22,10 @@ export async function userRoutes(fastify: FastifyInstance) {
     }
     )
 
-    fastify.get('/get', async (request, reply) => {
+    fastify.get('/findAll', async (request, reply) => {
         try {
-            reply.send({hello:'world'})
+            const data = await userUserCase.findAll();
+            reply.send(data)
         } catch (error) {
             reply.code(500).send
         }})
