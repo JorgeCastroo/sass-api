@@ -36,7 +36,8 @@ app.register(async function (fastify) {
     )
   });
 app.listen({
-    port: 3000,
+    host:'0.0.0.0',
+    port:4000,
 },
 ()=>console.log('Server is running on port 3000'),
 )
