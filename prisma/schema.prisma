@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://sass-api_owner:fu7kMzo5Otdp@ep-mute-dawn-a5gbp7wv.us-east-2.aws.neon.tech/sass-api?sslmode=require"
 }
 
 model User {
