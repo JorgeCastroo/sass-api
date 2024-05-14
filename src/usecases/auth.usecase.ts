@@ -17,7 +17,6 @@ export class AuthUseCase {
         if (!isPasswordCorrect) {
             throw new Error('Email or password incorrect');
         }
-    
         const token = jwt.sign({ userId: user.id }, 'api-sass', { expiresIn: '7d' });
     
         const { password:userPassword, ...userWithoutPassword } = user;

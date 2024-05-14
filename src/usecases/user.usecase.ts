@@ -15,4 +15,9 @@ const result = await this.userRepository.create({name,email,password});
 
 return result;
     }
+
+ async findAll():Promise<UserResponse[]>{
+        const result = await this.userRepository.findAll();
+        return result;
+    }
 }
