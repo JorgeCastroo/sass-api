@@ -7,10 +7,11 @@ class UserRepositoryPrisma implements UserRepository {
             data: {
                 name: user.name,
                 email: user.email,
-                password: user.password
+                password: user.password,
+                roles:user.roles
             },
         });
-    const { password:userPassword, ...userWithoutPassword } = result;
+        const { password: userPassword, ...userWithoutPassword } = result;
 
         return userWithoutPassword
     }
@@ -26,6 +27,23 @@ class UserRepositoryPrisma implements UserRepository {
     async findAll(): Promise<UserResponse[]> {
         const result = await prisma.user.findMany();
         return result;
+    }
+    async currentUser(userId: string): Promise<UserResponse> {
+
+
+        const result = await prisma.user.findUnique({
+            where: {
+                id: userId
+            }
+        });
+
+        if (result === null) {
+            throw new Error('User not found');
+        }
+        
+        const { password: teste, ...userWithoutPassword } = result;
+
+        return userWithoutPassword
     }
 }
 

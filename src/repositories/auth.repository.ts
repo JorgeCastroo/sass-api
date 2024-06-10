@@ -16,5 +16,17 @@ class AuthRepositoryPrisma {
     return user || null;
     
     }
+
+  async loginAdmin({
+    email,
+  }:UserLogin):Promise<User | null> {
+
+    const user = await prisma.user.findFirst({
+      where: {
+        email: email
+      }
+    });
+    return user || null;
+    }
 }
 export { AuthRepositoryPrisma };

@@ -15,4 +15,16 @@ export async function authRoutes(fastify:FastifyInstance){
             
             reply.code(500).send(error)
         }})
+
+    fastify.post<{Body:UserLogin}>('/login/admin', async (request, reply) => {
+        try {
+            const { email, password } = request.body;
+            const data = await authUseCase.loginAdmin({ email, password });
+            reply.send(data)
+        } catch (error) {
+            
+            reply.code(500).send(error)
+        }}
+    )
+
 }

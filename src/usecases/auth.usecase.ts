@@ -11,11 +11,29 @@ export class AuthUseCase {
     async login({ email, password }: UserLogin): Promise<LoginResponse> {
         const user = await this.authRepository.login({ email, password });
         if (!user) {
-            throw new Error('User not found');
+            throw new Error('Email or password incorrect');
         }
         const isPasswordCorrect = await bcrypt.compare(password, user.password)
         if (!isPasswordCorrect) {
             throw new Error('Email or password incorrect');
+        }
+        const token = jwt.sign({ userId: user.id }, 'api-sass', { expiresIn: '7d' });
+    
+        const { password:userPassword, ...userWithoutPassword } = user;
+        return { user: userWithoutPassword, token };
+    }
+
+    async loginAdmin({ email, password }: UserLogin): Promise<LoginResponse> {
+        const user = await this.authRepository.login({ email, password });
+        if (!user) {
+            throw new Error('Email or password incorrect');
+        }
+        const isPasswordCorrect = await bcrypt.compare(password, user.password)
+        if (!isPasswordCorrect) {
+            throw new Error('Email or password incorrect');
+        }
+        if(!user.roles.includes('admin')){
+            throw new Error('Unauthorized');
         }
         const token = jwt.sign({ userId: user.id }, 'api-sass', { expiresIn: '7d' });
     
