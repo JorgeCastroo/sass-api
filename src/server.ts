@@ -44,6 +44,7 @@ app.register(async function (fastify) {
 
 app.listen({
     port: 4000,
+    host: '0.0.0.0',
 },
     () => console.log('Server is running on port 4000'),
 )
